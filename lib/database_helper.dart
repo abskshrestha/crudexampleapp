@@ -14,7 +14,7 @@ class DatabaseHelper {
   DatabaseHelper._privateconstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateconstructor();
 
-  static late final Database _database;
+  static Database _database;
   Future<Database> get database async {
     if (_database != null) return _database;
     _database = await _initiateDatabase();
