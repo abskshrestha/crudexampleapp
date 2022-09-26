@@ -27,11 +27,11 @@ class DatabaseHelper {
     String path = join(directory.path, _databaseName);
 
     return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate);
+        version: _databaseVersion, onCreate: _onCreate); 
   }
 
   Future _onCreate(Database db, int version) async {
-    db.query(''' // treat all the lines as single string
+    db.execute(''' // treat all the lines as single string
       Create table $_tableName (
         $columnId INTEGER PRIMARY KEY, 
         $columnName TEXT NOT NULL)
