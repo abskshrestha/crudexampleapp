@@ -4,9 +4,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "MyDatabase.db";
-  static final  _databaseVersion = 1;
-  static final _tableName = "myTable";
+  static final _dbName = "myDatabase.db";
+  static final _dbVersion = 1;
+  static const _tableName = "myTable";
 
   static final columnId = '_id';
   static final columnName = 'name';
@@ -24,18 +24,20 @@ class DatabaseHelper {
   _initiateDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
 
-    String path = join(directory.path, _databaseName);
+    String path = join(directory.path, _dbName);
 
     return await openDatabase(path,
-        version: _databaseVersion, onCreate: _onCreate); 
+        version: _dbVersion, onCreate: _onCreate);
   }
 
-  Future _onCreate(Database db, int version) async {
-    db.execute(''' // treat all the lines as single string
-      Create table $_tableName (
+  Future _onCreate(Database db, int version) {
+    return db.execute(
+      '''
+      CREATE TABLE $_tableName (
         $columnId INTEGER PRIMARY KEY, 
         $columnName TEXT NOT NULL)
-      ''');
+      '''
+);
   }
 
   Future<int> insert(Map<String, dynamic> row) async {
